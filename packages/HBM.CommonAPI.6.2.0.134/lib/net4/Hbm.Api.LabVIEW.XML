@@ -1,0 +1,269 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Hbm.Api.LabVIEW</name>
+    </assembly>
+    <members>
+        <member name="T:Hbm.Api.LabVIEW.FilterType">
+            <summary>
+            Possible filter types (some are not supported by all devices!)
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.LabVIEW.FilterType.PresentFilter">
+            <summary>
+            Filter as currently set on device
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.LabVIEW.FilterType.AutoFilter">
+            <summary>
+            Auto filter (typically 10% of the signal sample rate)
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.LabVIEW.FilterType.BesselFilter">
+            <summary>
+            Bessel filter
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.LabVIEW.FilterType.ButterworthFilter">
+            <summary>
+            Butterworth filter
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.LabVIEW.FilterType.HighpassFilter">
+            <summary>
+            Highpass filter (only possible for QuantumX)
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.LabVIEW.FilterType.LinearPhaseFilter">
+            <summary>
+            Linear phase filter (only possible for QuantumX)
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.LabVIEW.FilterType.NoFilter">
+            <summary>
+            No filter (not possible for all device)
+            </summary>
+        </member>
+        <member name="T:Hbm.Api.LabVIEW.SignalType">
+            <summary>
+            Possible signal types (used for filtering signals)
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.LabVIEW.SignalType.All">
+            <summary>
+            All possible signals (as a convenient, most used selection)
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.LabVIEW.SignalType.AnalogIn">
+            <summary>
+            Analog in signals
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.LabVIEW.SignalType.AnalogOut">
+            <summary>
+            Analog out signals
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.LabVIEW.SignalType.DigitalIn">
+            <summary>
+            Digital in signals
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.LabVIEW.SignalType.DigitalOut">
+            <summary>
+            Digital out signals
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.LabVIEW.SignalType.Virtual">
+            <summary>
+            Virtual signals (e.g. PMX calculated channels)
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.LabVIEW.SignalType.OpticalIn">
+            <summary>
+            Optical signals (fiber bragg grating devices)
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.LabVIEW.SignalType.CanIn">
+            <summary>
+            CAN in signals
+            </summary>
+        </member>
+        <member name="F:Hbm.Api.LabVIEW.SignalType.CanRaw">
+            <summary>
+            CAN Raw signals
+            </summary>
+        </member>
+        <member name="T:Hbm.Api.LabVIEW.Utils">
+            <summary>
+            Class that supports some conversions that can not be done within LabVIEW.
+            License checking for LabVIEW is also done here (partly).
+            </summary>
+        </member>
+        <member name="T:Hbm.Api.LabVIEW.Utils.SortBy">
+            <summary>
+            Defines the device property that should be used to sort the devices returned by scan
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.LabVIEW.Utils.GetSignalsOfDevice(Hbm.Api.Common.Entities.Device,System.Boolean)">
+            <summary>
+            Get all signals or all first signals of the given device (e.g. only
+            the first signals of the QuantumX devices..)
+            </summary>
+            <param name="device">Device from which to get the signals</param>
+            <param name="firstSignalsOnly">If true only the first signal of each
+            channel will be returned</param>
+            <returns>List of signals</returns>
+        </member>
+        <member name="M:Hbm.Api.LabVIEW.Utils.GetFilteredSignals(System.Collections.Generic.List{Hbm.Api.Common.Entities.Device},System.Collections.Generic.List{Hbm.Api.Common.Entities.Signals.Signal},Hbm.Api.LabVIEW.SignalType,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Filters the given device/signal lists according to the demanded signal types (FLAG!) and returns
+            a new list that contains signals of these types if they correspond also to the given measurable and activated settings
+            </summary>
+            <param name="devices">Devices where the given signals are located</param>
+            <param name="signals">Signals to filter </param>
+            <param name="signalTypeToFilter">Signal types to use as filter for given signals.</param>
+            <param name="removeActivatedSignals">If set to true, only signals that can be used in a measurement will be returned.</param>
+            <param name="removeDeactivatedSignals">If set to true, only signals that are activated (or do not support this feature) will be returned.
+            If set to false, only deactivated signals of the given types will be returned.</param>
+            <param name="removeNotMeasurableSignals">If set to true, only signals that can be used in a measurement will be returned.</param>
+            <returns>List of signals according to given signal type</returns>
+        </member>
+        <member name="M:Hbm.Api.LabVIEW.Utils.InitializeApi(System.String,System.Boolean)">
+            <summary>
+            Initializes this dll by checking if there is a valid license file in the same directory as this dll.
+            If the calling LabVIEW VI is not running within IDE (e.g. calling VI is an executable) no license checking will be done!
+            </summary>
+            <param name="licenseFileName">Absolute path and filename of the license file or empty to use default license path and name 
+            (any file with ".license" extension in the directory where theses assemblies are located)</param>
+            <param name="isRunningInLabviewIde">True if calling LabVIEW VI is running within IDE</param>
+            <returns>True if license check succeeded</returns>
+        </member>
+        <member name="M:Hbm.Api.LabVIEW.Utils.Scan(System.Collections.Generic.List{System.String},Hbm.Api.LabVIEW.Utils.SortBy)">
+            <summary>
+            Executes scan on all given DeviceFamilies and returns a list of found devices.
+            This function is wrapped here, because LabVIEW seems to avoid garbage collecting
+            if GC has no time to do that. So we force a wait after the scan BEFORE we go 
+            back to LabVIEW context...
+            We do not want to do this wihtin our .Net API-  it seems to work there with no 
+            problems. So this is just for LabVIEW...
+            </summary>
+            <param name="familyNames">List of DeviceFamilies for which a scan is executed</param>
+            <returns>List of all found devices</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="familyNames"/> is <c>null</c>.</exception>
+        </member>
+        <member name="M:Hbm.Api.LabVIEW.Utils.GetLicenseInfo">
+            <summary>
+            Get further information about the current license
+            </summary>
+            <returns>License information</returns>
+        </member>
+        <member name="M:Hbm.Api.LabVIEW.Utils.GetSingleMeasurementValues(System.Collections.Generic.List{Hbm.Api.Common.Entities.Device},System.Collections.Generic.List{Hbm.Api.Common.Entities.Signals.Signal})">
+            <summary>
+            Get a single measurement value for each given signal
+            </summary>
+            <param name="devices">Devices that hold the signals</param>
+            <param name="signals">Signals from which to get a single measurement value</param>
+        </member>
+        <member name="M:Hbm.Api.LabVIEW.Utils.ActivateSignals(System.Collections.Generic.List{Hbm.Api.Common.Entities.Device},System.Collections.Generic.List{Hbm.Api.Common.Entities.Signals.Signal},System.Boolean)">
+            <summary>
+            Activates or deactivates the channels of the given list of signals (in LabVIEW we only work with the signals!).
+            When there is a signal whose channel can not be activated (e.g. due to not supporting the IsActivated channel property)
+            no error or warning will be generated. This makes it possible to just activate/deactivate the channels that support that feature
+            without forcing the LabVIEW user to check it beforehand by himself..
+            </summary>
+            <param name="devices">Devices used in the session</param>
+            <param name="signals">Signals used in the session</param>
+            <param name="activate">true to activate the channel, false to deactivate the channel</param>
+            <returns>List of problems that occurred during activation/deactivation</returns>
+        </member>
+        <member name="M:Hbm.Api.LabVIEW.Utils.ExecuteZeroing(System.Collections.Generic.List{Hbm.Api.Common.Entities.Device},System.Collections.Generic.List{Hbm.Api.Common.Entities.Signals.Signal},System.Int32)">
+            <summary>
+            Get a single measurement value for each given signal
+            </summary>
+            <param name="devices">Devices that hold the signals</param>
+            <param name="signals">Signals that should be zeroed</param>
+            <param name="numberOfMeasurementValuesToUse">Number of measurement values that should be used to calculate the zero offset</param>
+        </member>
+        <member name="M:Hbm.Api.LabVIEW.Utils.SetFilter(Hbm.Api.Common.Entities.Signals.Signal,Hbm.Api.LabVIEW.FilterType,System.Decimal)">
+            <summary>
+            Sets the filter of the given signal to the given type.
+            Thereby the filter frequency of the current filter will be set
+            to the new filter.
+            The signal has to support filter (so only SyncSignal derived signals are possible)
+            In case of signals that do not support filters - nothing happens (no error!!!)
+            </summary>
+            <param name="signal">Signal whose filter should be set</param>
+            <param name="filterType">Filter type to set</param>
+            <param name="filterFrequency">Filter frequency of the filter</param>
+        </member>
+        <member name="M:Hbm.Api.LabVIEW.Utils.GetStringListFromArray(System.String[])">
+            <summary>
+            Converts an array of string into a list of strings
+            </summary>
+            <param name="strings">Array of strings</param>
+            <returns>List of strings</returns>
+        </member>
+        <member name="M:Hbm.Api.LabVIEW.Utils.GetDeviceListFromArray(Hbm.Api.Common.Entities.Device[])">
+            <summary>
+            Converts an array of devices into a list of devices
+            </summary>
+            <param name="devices">Array of devices</param>
+            <returns>List of devices</returns>
+        </member>
+        <member name="M:Hbm.Api.LabVIEW.Utils.GetConnectorListFromArray(Hbm.Api.Common.Entities.Connectors.Connector[])">
+            <summary>
+            Converts an array of connectors into a list of connectors
+            </summary>
+            <param name="connectors">Array of connectors</param>
+            <returns>List of connectors</returns>
+        </member>
+        <member name="M:Hbm.Api.LabVIEW.Utils.GetChannelListFromArray(Hbm.Api.Common.Entities.Channels.Channel[])">
+            <summary>
+            Converts an array of channels into a list of channels
+            </summary>
+            <param name="channels">Array of channels</param>
+            <returns>List of channels</returns>
+        </member>
+        <member name="M:Hbm.Api.LabVIEW.Utils.GetSignalListFromArray(Hbm.Api.Common.Entities.Signals.Signal[])">
+            <summary>
+            Converts an array of signals into a list of signals
+            </summary>
+            <param name="signals">Array of signals</param>
+            <returns>List of signals</returns>
+        </member>
+        <member name="M:Hbm.Api.LabVIEW.Utils.GetProblemListFromArray(Hbm.Api.Common.Entities.Problems.Problem[])">
+            <summary>
+            Converts an array of problems into a list of problems
+            </summary>
+            <param name="problems">Array of problems</param>
+            <returns>List of problems</returns>
+        </member>
+        <member name="M:Hbm.Api.LabVIEW.Utils.GetProblemArrayFromList(System.Collections.Generic.List{Hbm.Api.Common.Entities.Problems.Problem})">
+            <summary>
+            Converts a list of problems into an array of problems
+            </summary>
+            <param name="problems">List of problems</param>
+            <returns>Array of problems</returns>
+        </member>
+        <member name="M:Hbm.Api.LabVIEW.Utils.CheckLicense(System.String,Hbm.LicenseManager.Entities.LicenseInfo@)">
+            <summary>
+            Returns true if a valid license file has been found
+            </summary>
+            <param name="licenseFileName">Full path and filename to the licence file</param>
+            <param name="licenseInfo">Information about the licensed user etc.</param>
+            <returns>True if license is valid</returns>
+        </member>
+        <member name="M:Hbm.Api.LabVIEW.Utils.HandleLicenseFailedError">
+            <summary>
+            Defines what should happen in case of an unsuccessful license check....
+            </summary>
+        </member>
+        <member name="M:Hbm.Api.LabVIEW.Utils.GetDirectoryOfAssembly">
+            <summary>
+            Returns the directory in which this assembly is located.
+            </summary>
+            <returns>Directory of this assembly</returns>
+        </member>
+    </members>
+</doc>
