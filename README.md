@@ -1,7 +1,9 @@
 # Desktop application for the double drum tack test bench
-This desktop application provides a user interface for controlling the test workbench.
+This desktop application provides a user interface for controlling the test workbench. 
 
-![Layout](Iconsss/Layout.png)
+Only for the DDT test bench at the TUM School of Engineering and Design.
+
+<!-- ![Layout](Iconsss/Layout.png) -->
 
 ## Functions
 ### Main Menu
